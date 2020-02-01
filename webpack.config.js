@@ -1,15 +1,12 @@
 const path = require("path");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.ts",
+  entry: { engine: "./engine/index.ts", demo: "./demo/scripts/demo.ts" },
   devtool: "inline-source-map",
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      },
       {
         test: /\.ts$/,
         use: "ts-loader",
@@ -21,10 +18,11 @@ module.exports = {
     extensions: [".ts"]
   },
   output: {
-    filename: "bundle.js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist")
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new CopyPlugin([
       { from: "demo/index.html", to: "index.html" },
       { from: "demo/styles", to: "styles" }
