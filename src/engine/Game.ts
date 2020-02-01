@@ -1,3 +1,3 @@
 export default function Game(): void {
-  console.log("Game loaded");
+  console.log("Game loaded!");
 }
