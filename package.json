@@ -1,0 +1,19 @@
+{
+  "name": "topdown_ts",
+  "version": "1.0.0",
+  "description": "A simple game engine designed for making topdown 2D graphics",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "author": "Austin Bourgerie",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
+}

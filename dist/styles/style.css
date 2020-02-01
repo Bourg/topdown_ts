@@ -1,0 +1,17 @@
+body {
+  padding: 24px;
+  background: black;
+  color: white;
+}
+
+.title {
+  padding: 16px;
+  text-align: center;
+  font-family: monospace;
+  font-size: 2.5rem;
+}
+
+#canvas {
+  background: #cdcdcd;
+  width: 100%;
+}
