@@ -5,8 +5,8 @@
 export class Game {
   private readonly timestepMillis: number;
 
-  constructor(timestepMillis: number = 10) {
-    this.timestepMillis = timestepMillis;
+  constructor(updateRate: number = 60) {
+    this.timestepMillis = 1000 / updateRate;
   }
 
   /**
@@ -27,7 +27,7 @@ export class Game {
   private startLoop(context: CanvasRenderingContext2D): void {
     let t = 0;
 
-    let currentTime = new Date().getTime();
+    let previousTime = new Date().getTime();
     let accumulator = 0.0;
 
     let loop = () => {
@@ -35,9 +35,9 @@ export class Game {
       requestAnimationFrame(loop);
 
       // Rotate times
-      const newTime = new Date().getTime();
-      const frameTime = newTime - currentTime;
-      currentTime = newTime;
+      const nextTime = new Date().getTime();
+      const frameTime = nextTime - previousTime;
+      previousTime = nextTime;
 
       accumulator += frameTime;
 
@@ -55,11 +55,7 @@ export class Game {
     loop();
   }
 
-  private update(elapsed: number): void {
-    console.log(`Running update with elapsed = ${elapsed}`);
-  }
+  private update(elapsed: number): void {}
 
-  private render(context: CanvasRenderingContext2D, leftover: number): void {
-    console.log(`Running render with leftover = ${leftover}`);
-  }
+  private render(context: CanvasRenderingContext2D, leftover: number): void {}
 }
