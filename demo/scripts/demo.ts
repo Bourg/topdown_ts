@@ -1,4 +1,5 @@
-import { Game } from "Engine/index";
+import { Game } from "Engine/Game";
 
-console.log("demo.ts has loaded");
-Game();
+const canvas = <HTMLCanvasElement>document.getElementById("canvas");
+
+new Game(5).start(canvas);
