@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "Engine/*": ["./engine/*"],
+      "Demo/*": ["./demo/scripts/*"]
+    }
+  }
+}

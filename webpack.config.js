@@ -15,7 +15,11 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [".ts"]
+    extensions: [".ts"],
+    alias: {
+      Engine: path.resolve(__dirname, "engine"),
+      Demo: path.resolve(__dirname, "demo", "scripts")
+    }
   },
   output: {
     filename: "[name].bundle.js",
