@@ -13,6 +13,10 @@ export default class Rectangle {
     this.height = height || 0;
   }
 
+  static fromPoint(topLeft: Point): Rectangle {
+    return new Rectangle(0, 0, topLeft.x, topLeft.y);
+  }
+
   static fromPoints(topLeft: Point, size: Point): Rectangle {
     return new Rectangle(topLeft.x, topLeft.y, size.x, size.y);
   }
