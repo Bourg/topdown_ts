@@ -76,6 +76,12 @@ export default class Game {
   }
 
   private render(context: CanvasRenderingContext2D, leftover: number): void {
+    context.clearRect(
+      0,
+      0,
+      this.gameSettings.resolution.x,
+      this.gameSettings.resolution.y
+    );
     this.world.render(context, leftover);
   }
 }

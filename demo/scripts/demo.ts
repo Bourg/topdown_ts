@@ -1,25 +1,33 @@
 import Game from "Engine/Game";
 import World from "../../Engine/world/World";
 import Entity from "../../Engine/entity/Entity";
+import Point from "../../Engine/spacial/Point";
 
 const canvas = <HTMLCanvasElement>document.getElementById("canvas");
 
 const world = new World(40, 20);
+
+const entityVelocity = new Point(2, 1);
+const pixelScale = 32;
+
 world.addEntity(
-  new Entity(0, 0, {
-    input: {
-      update: (entity: Entity) => {
-        console.log("Entity update!");
-      }
+  new Entity(new Point(0, 0), new Point(1, 1), {
+    input: (entity: Entity) => {},
+    physics: (entity: Entity, timestepMillis: number) => {
+      entity.position.x += (timestepMillis * entityVelocity.x) / 1000;
+      entity.position.y += (timestepMillis * entityVelocity.y) / 1000;
     },
-    graphics: {
-      render: (
-        entity: Entity,
-        context: CanvasRenderingContext2D,
-        leftoverMillis: number
-      ) => {
-        console.log("Entity render!");
-      }
+    graphics: (
+      entity: Entity,
+      context: CanvasRenderingContext2D,
+      leftoverMillis: number
+    ) => {
+      context.strokeRect(
+        pixelScale * entity.position.x,
+        pixelScale * entity.position.y,
+        pixelScale * entity.size.x,
+        pixelScale * entity.size.y
+      );
     }
   })
 );
