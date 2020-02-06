@@ -31,19 +31,19 @@ export default class Entity {
     return Rectangle.fromPoints(this.position, this.size);
   }
 
-  update(timestepMillis: number): void {
+  update(timestepSeconds: number): void {
     if (this.components.input) {
       this.components.input(this);
     }
 
     if (this.components.physics) {
-      this.components.physics(this, timestepMillis);
+      this.components.physics(this, timestepSeconds);
     }
   }
 
-  render(context: CanvasRenderingContext2D, leftoverMillis: number) {
+  render(context: CanvasRenderingContext2D, timestepSeconds: number) {
     if (this.components.graphics) {
-      this.components.graphics(this, context, leftoverMillis);
+      this.components.graphics(this, context, timestepSeconds);
     }
   }
 }

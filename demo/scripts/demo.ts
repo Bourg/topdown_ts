@@ -13,18 +13,18 @@ const pixelScale = 32;
 world.addEntity(
   new Entity(new Point(0, 0), new Point(1, 1), {
     input: (entity: Entity) => {},
-    physics: (entity: Entity, timestepMillis: number) => {
-      entity.position.x += (timestepMillis * entityVelocity.x) / 1000;
-      entity.position.y += (timestepMillis * entityVelocity.y) / 1000;
+    physics: (entity: Entity, timestepSeconds: number) => {
+      entity.position.x += timestepSeconds * entityVelocity.x;
+      entity.position.y += timestepSeconds * entityVelocity.y;
     },
     graphics: (
       entity: Entity,
       context: CanvasRenderingContext2D,
-      leftoverMillis: number
+      leftoverSeconds: number
     ) => {
       context.strokeRect(
-        pixelScale * entity.position.x,
-        pixelScale * entity.position.y,
+        pixelScale * (entity.position.x + entityVelocity.x * leftoverSeconds),
+        pixelScale * (entity.position.y + entityVelocity.y * leftoverSeconds),
         pixelScale * entity.size.x,
         pixelScale * entity.size.y
       );

@@ -40,10 +40,10 @@ export default class Game {
   }
 
   private startLoop(context: CanvasRenderingContext2D): void {
-    const timestepMillis = Math.round(1000 / this.gameSettings.updateFrequency);
+    const timestepSeconds = 1.0 / this.gameSettings.updateFrequency;
     let t = 0;
 
-    let previousTime = new Date().getTime();
+    let previousTime = new Date().getTime() / 1000.0;
     let accumulator = 0.0;
 
     let loop = () => {
@@ -51,17 +51,16 @@ export default class Game {
       requestAnimationFrame(loop);
 
       // Rotate times
-      const nextTime = new Date().getTime();
+      const nextTime = new Date().getTime() / 1000.0;
       const frameTime = nextTime - previousTime;
       previousTime = nextTime;
-
       accumulator += frameTime;
 
       // Consume time since last frame with updates
-      while (accumulator >= timestepMillis) {
-        this.update(timestepMillis);
-        accumulator -= timestepMillis;
-        t += timestepMillis;
+      while (accumulator >= timestepSeconds) {
+        this.update(timestepSeconds);
+        accumulator -= timestepSeconds;
+        t += timestepSeconds;
       }
 
       // Once there is less than one timestep left, render and interpolate the leftover
@@ -71,17 +70,20 @@ export default class Game {
     loop();
   }
 
-  private update(elapsed: number): void {
-    this.world.update(elapsed);
+  private update(elapsedSeconds: number): void {
+    this.world.update(elapsedSeconds);
   }
 
-  private render(context: CanvasRenderingContext2D, leftover: number): void {
+  private render(
+    context: CanvasRenderingContext2D,
+    leftoverSeconds: number
+  ): void {
     context.clearRect(
       0,
       0,
       this.gameSettings.resolution.x,
       this.gameSettings.resolution.y
     );
-    this.world.render(context, leftover);
+    this.world.render(context, leftoverSeconds);
   }
 }

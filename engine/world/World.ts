@@ -15,17 +15,17 @@ export default class World {
     this.entities.push(entity);
   }
 
-  update(timestepMillis: number) {
+  update(timestepSeconds: number) {
     // Update each entity
     this.entities.forEach(entity => {
-      entity.update(timestepMillis);
+      entity.update(timestepSeconds);
     });
 
     // Delete entities that are marked for deletion (e.g. died)
     this.entities = this.entities.filter(entity => !entity.markedForDeletion);
   }
 
-  render(context: CanvasRenderingContext2D, leftoverMillis: number) {
-    this.entities.forEach(entity => entity.render(context, leftoverMillis));
+  render(context: CanvasRenderingContext2D, leftoverSeconds: number) {
+    this.entities.forEach(entity => entity.render(context, leftoverSeconds));
   }
 }
