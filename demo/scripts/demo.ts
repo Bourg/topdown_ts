@@ -1,12 +1,12 @@
 import Game from "Engine/Game";
-import World from "../../Engine/world/World";
-import Entity from "../../Engine/entity/Entity";
-import Point from "../../Engine/spacial/Point";
+import World from "Engine/world/World";
+import Entity from "Engine/entity/Entity";
+import Point from "Engine/spacial/Point";
 
 const canvas = <HTMLCanvasElement>document.getElementById("canvas");
 
 const world = new World(new Point(36, 24));
-const pixelScale = 10;
+const pixelScale = 50;
 
 const driftPhysics = (initialVelocity: Point) => {
   const velocity = initialVelocity.clone();
@@ -82,9 +82,9 @@ for (let i = 0; i < 50; i++) {
 }
 
 new Game(world, {
-  updateFrequency: 120,
+  updateFrequency: 60,
   resolution: {
-    x: 360,
-    y: 240
+    x: 1800,
+    y: 1200
   }
 }).start(canvas);

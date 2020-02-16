@@ -17,12 +17,14 @@ export type EntityComponents = {
 export default class Entity {
   position: Point;
   size: Point;
+  velocity: Point;
   markedForDeletion: boolean;
   components: EntityComponents;
 
   constructor(position: Point, size: Point, components: EntityComponents = {}) {
     this.position = position;
     this.size = size;
+    this.velocity = new Point(0, 0);
     this.markedForDeletion = false;
     this.components = components;
   }
@@ -35,6 +37,8 @@ export default class Entity {
     if (this.components.input) {
       this.components.input(this);
     }
+
+    this.position.add(this.velocity.scaledBy(timestepSeconds));
 
     if (this.components.physics) {
       this.components.physics(this, timestepSeconds);

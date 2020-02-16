@@ -21,6 +21,20 @@ export default class Rectangle {
     return new Rectangle(topLeft.x, topLeft.y, size.x, size.y);
   }
 
+  get whole() {
+    const wholeLeft = Math.floor(this.left);
+    const wholeRight = Math.ceil(this.right);
+    const wholeTop = Math.floor(this.top);
+    const wholeBottom = Math.ceil(this.bottom);
+
+    return new Rectangle(
+      wholeLeft,
+      wholeTop,
+      wholeRight - wholeLeft,
+      wholeBottom - wholeTop
+    );
+  }
+
   get right() {
     return this.left + this.width;
   }
