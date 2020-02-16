@@ -12,11 +12,11 @@ export default class Point {
   }
 
   add(other: Point): void {
-    this.x = this.x + other.x;
-    this.y = this.y + other.y;
+    this.x += other.x;
+    this.y += other.y;
   }
 
-  scaledBy(scaleBy: number | Point): Point {
+  scaleBy(scaleBy: number | Point): void {
     let scaleByX;
     let scaleByY;
 
@@ -28,6 +28,13 @@ export default class Point {
       scaleByY = scaleBy.y;
     }
 
-    return new Point(this.x * scaleByX, this.y * scaleByY);
+    this.x *= scaleByX;
+    this.y *= scaleByY;
+  }
+
+  scaledBy(scaleBy: number | Point): Point {
+    const clone = this.clone();
+    clone.scaleBy(scaleBy);
+    return clone;
   }
 }

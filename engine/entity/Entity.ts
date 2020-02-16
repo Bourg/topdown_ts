@@ -15,16 +15,21 @@ export type EntityComponents = {
 };
 
 export default class Entity {
-  position: Point;
   size: Point;
+  position: Point;
   velocity: Point;
   markedForDeletion: boolean;
   components: EntityComponents;
 
-  constructor(position: Point, size: Point, components: EntityComponents = {}) {
-    this.position = position;
-    this.size = size;
-    this.velocity = new Point(0, 0);
+  constructor(
+    size: Point,
+    position: Point,
+    velocity: Point,
+    components: EntityComponents = {}
+  ) {
+    this.size = size.clone();
+    this.position = position.clone();
+    this.velocity = velocity.clone();
     this.markedForDeletion = false;
     this.components = components;
   }

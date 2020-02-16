@@ -8,29 +8,22 @@ const canvas = <HTMLCanvasElement>document.getElementById("canvas");
 const world = new World(new Point(36, 24));
 const pixelScale = 50;
 
-const driftPhysics = (initialVelocity: Point) => {
-  const velocity = initialVelocity.clone();
-
-  return (entity: Entity, timestepSeconds: number) => {
-    entity.position.x += timestepSeconds * velocity.x;
-    entity.position.y += timestepSeconds * velocity.y;
-
-    if (!entity.boundingRectangle.within(world.boundingRectangle)) {
-      if (
-        entity.boundingRectangle.top < 0 ||
-        entity.boundingRectangle.bottom > world.boundingRectangle.bottom
-      ) {
-        velocity.y = -velocity.y;
-      }
-
-      if (
-        entity.boundingRectangle.left < 0 ||
-        entity.boundingRectangle.right > world.boundingRectangle.right
-      ) {
-        velocity.x = -velocity.x;
-      }
+const bouncePhysics = (entity: Entity, timestepSeconds: number) => {
+  if (!entity.boundingRectangle.within(world.boundingRectangle)) {
+    if (
+      entity.boundingRectangle.top < 0 ||
+      entity.boundingRectangle.bottom > world.boundingRectangle.bottom
+    ) {
+      entity.velocity.scaleBy(new Point(1, -1));
     }
-  };
+
+    if (
+      entity.boundingRectangle.left < 0 ||
+      entity.boundingRectangle.right > world.boundingRectangle.right
+    ) {
+      entity.velocity.scaleBy(new Point(-1, 1));
+    }
+  }
 };
 
 const wireframeGraphics = (color: string) => (
@@ -52,15 +45,10 @@ const wireframeGraphics = (color: string) => (
 };
 
 const randomizedComponents = () => {
-  const initialVelocity = new Point(
-    (Math.random() < 0.5 ? 1 : -1) * (5 + 8 * Math.random()),
-    (Math.random() < 0.5 ? 1 : -1) * (5 + 8 * Math.random())
-  );
-
   const colors = ["red", "white", "blue"];
 
   return {
-    physics: driftPhysics(initialVelocity),
+    physics: bouncePhysics,
     graphics: wireframeGraphics(
       colors[Math.floor(colors.length * Math.random())]
     )
@@ -78,7 +66,14 @@ for (let i = 0; i < 50; i++) {
     Math.floor((world.boundingRectangle.height - size.y) * Math.random())
   );
 
-  world.addEntity(new Entity(location, size, randomizedComponents()));
+  const initialVelocity = new Point(
+    (Math.random() < 0.5 ? 1 : -1) * (5 + 8 * Math.random()),
+    (Math.random() < 0.5 ? 1 : -1) * (5 + 8 * Math.random())
+  );
+
+  world.addEntity(
+    new Entity(size, location, initialVelocity, randomizedComponents())
+  );
 }
 
 new Game(world, {
